@@ -1,16 +1,171 @@
-# React + Vite
+# 📸 InstaInsights
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern Instagram analytics tool built with React that helps you discover:
 
-Currently, two official plugins are available:
+* ❌ People who don't follow you back
+* ❤️ Fans (people who follow you but you don't follow back)
+* 🤝 Mutual followers
+* 📊 Account analytics and insights
+* 📥 Export unfollowers to CSV
+* 🔍 Search usernames instantly
+* 🌙 Dark / Light mode support
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 🚀 Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 📂 Upload Instagram Data
 
-## Expanding the ESLint configuration
+Simply export your Instagram data and upload:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+* `followers_1.json`
+* `following.json`
+
+The app processes everything locally inside your browser.
+
+### 🔍 Username Search
+
+Quickly search through your unfollowers list.
+
+### 📊 Analytics Dashboard
+
+Visualize your Instagram relationships using interactive charts.
+
+### 📥 CSV Export
+
+Download unfollowers as a CSV file for future reference.
+
+### 🌙 Dark Mode
+
+Beautiful dark and light themes with persistent preferences.
+
+### 🔒 Privacy First
+
+No data is uploaded to any server.
+Everything runs completely inside your browser.
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
+
+* React
+* Vite
+* Tailwind CSS
+* Framer Motion
+* React Dropzone
+* React Hot Toast
+* React Icons
+* Recharts
+
+---
+
+## 📦 Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/yourusername/insta-insights.git
+```
+
+Move into the project:
+
+```bash
+cd insta-insights
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run development server:
+
+```bash
+npm run dev
+```
+
+Build for production:
+
+```bash
+npm run build
+```
+
+---
+
+## 📁 Project Structure
+
+```text
+src
+│
+├── components
+│   ├── FileUpload.jsx
+│   ├── Results.jsx
+│   └── Analytics.jsx
+│
+├── App.jsx
+├── main.jsx
+├── index.css
+```
+
+---
+
+## 📊 How It Works
+
+The application compares:
+
+```text
+Following List
+      -
+Followers List
+```
+
+to determine:
+
+```text
+People You Follow
+Who Don't Follow You Back
+```
+
+It also calculates:
+
+* Fans
+* Mutual Followers
+* Total Connections
+
+---
+
+## 🔐 Privacy
+
+Your Instagram export files never leave your device.
+
+All processing is performed locally using JavaScript in the browser.
+
+No database.
+No backend.
+No tracking.
+
+---
+
+## 🎯 Future Improvements
+
+* Recently Unfollowed Detection
+* Profile Picture Support
+* Advanced Analytics
+* Growth Tracking
+* Multiple Followers File Support
+* Historical Comparison Reports
+
+---
+
+## 👨‍💻 Author
+
+Suraj
+
+Frontend Developer | MERN Stack Developer
+
+---
+
+⭐ If you found this project useful, consider giving it a star on GitHub.
