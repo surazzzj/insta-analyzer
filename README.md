@@ -18,7 +18,7 @@ A modern Instagram analytics tool built with React that helps you discover:
 
 Simply export your Instagram data and upload:
 
-* `followers_1.json`
+* `followers_1.json || followers.json`
 * `following.json`
 
 The app processes everything locally inside your browser.
