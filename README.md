@@ -165,7 +165,3 @@ No tracking.
 Suraj
 
 Frontend Developer | MERN Stack Developer
-
----
-
-⭐ If you found this project useful, consider giving it a star on GitHub.
