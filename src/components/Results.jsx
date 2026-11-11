@@ -319,15 +319,29 @@ function Results({ data }) {
 
                   <div
                     className="
+                      relative
                       w-14
                       h-14
+                      shrink-0
+                      overflow-hidden
                       rounded-full
                       bg-gradient-to-r
                       from-pink-500
                       via-purple-500
                       to-indigo-500
                     "
-                  />
+                  >
+                    <img
+                      src={`https://unavatar.io/instagram/${encodeURIComponent(user)}`}
+                      alt={`@${user} profile picture`}
+                      loading="lazy"
+                      decoding="async"
+                      className="w-full h-full object-cover"
+                      onError={(event) => {
+                        event.currentTarget.style.display = "none";
+                      }}
+                    />
+                  </div>
 
                   <div>
 
