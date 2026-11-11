@@ -10,7 +10,7 @@ function App() {
   const [data, setData] = useState(null);
 
   const [darkMode, setDarkMode] = useState(
-    () => localStorage.getItem("theme") === "dark"
+    () => localStorage.getItem("theme") !== "light"
   );
 
   useEffect(() => {
@@ -189,7 +189,7 @@ function App() {
                 }`}
             >
               Insta
-              <span className="text-pink-500">
+              <span className="text-fuchsia-400">
                 Insights
               </span>
             </h1>
@@ -236,13 +236,11 @@ function App() {
               : "text-[#242033]"
             }`}
         >
-          Instagram{" "}
+          Your Instagram,{" "}
 
           <span className="bg-gradient-to-r from-fuchsia-400 via-violet-400 to-indigo-400 bg-clip-text text-transparent">
-            Analytics
-          </span>{" "}
-
-          Dashboard
+            decoded.
+          </span>
         </motion.h1>
 
         <motion.p
