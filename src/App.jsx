@@ -115,9 +115,9 @@ function App() {
 
   return (
     <div
-      className={`min-h-screen transition-all duration-500 ${darkMode
-          ? "bg-slate-950"
-          : "bg-gradient-to-br from-[#faf5ff] via-white to-[#f5f3ff]"
+      className={`min-h-screen overflow-hidden transition-colors duration-500 ${darkMode
+          ? "bg-[#09090f] text-slate-100"
+          : "bg-[#f7f6fb] text-[#242033]"
         }`}
     >
       <Toaster
@@ -146,7 +146,7 @@ function App() {
             w-72
             h-72
             rounded-full
-            bg-pink-500/20
+            bg-fuchsia-500/10
             blur-3xl
           "
         />
@@ -159,7 +159,7 @@ function App() {
             w-72
             h-72
             rounded-full
-            bg-purple-500/20
+            bg-violet-500/10
             blur-3xl
           "
         />
@@ -169,23 +169,23 @@ function App() {
 
       <nav
         className={`sticky top-0 z-50 backdrop-blur-md border-b ${darkMode
-            ? "bg-slate-900/80 border-slate-800"
-            : "bg-white/80 border-gray-100"
+            ? "bg-[#10101a]/85 border-white/[0.07]"
+            : "bg-white/75 border-black/[0.06]"
           }`}
       >
-        <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
 
           <div className="flex items-center gap-3">
 
             <FaInstagram
-              size={40}
-              className="text-pink-500"
+              size={34}
+              className="text-fuchsia-500"
             />
 
             <h1
-              className={`text-3xl font-bold ${darkMode
+              className={`text-2xl font-bold tracking-tight ${darkMode
                   ? "text-white"
-                  : "text-slate-900"
+                  : "text-[#242033]"
                 }`}
             >
               Insta
@@ -200,9 +200,9 @@ function App() {
             onClick={() =>
               setDarkMode(!darkMode)
             }
-            className={`p-3 rounded-xl transition-all ${darkMode
-                ? "bg-slate-800 text-yellow-400 hover:bg-slate-700"
-                : "bg-gray-100 text-slate-700 hover:bg-gray-200"
+            className={`p-3 rounded-xl border transition-all ${darkMode
+                ? "bg-white/[0.06] border-white/10 text-amber-300 hover:bg-white/10"
+                : "bg-white border-black/[0.06] text-slate-700 hover:bg-slate-100"
               }`}
           >
             {darkMode ? (
@@ -217,7 +217,7 @@ function App() {
 
       {/* Hero Section */}
 
-      <section className="max-w-7xl mx-auto px-6 pt-20">
+      <section className="max-w-5xl mx-auto px-6 pt-24 md:pt-28">
 
         <motion.h1
           initial={{
@@ -231,14 +231,14 @@ function App() {
           transition={{
             duration: 0.8,
           }}
-          className={`text-center text-5xl md:text-7xl font-bold ${darkMode
+          className={`text-center text-4xl md:text-6xl font-semibold tracking-[-0.045em] leading-[1.08] ${darkMode
               ? "text-white"
-              : "text-slate-900"
+              : "text-[#242033]"
             }`}
         >
           Instagram{" "}
 
-          <span className="bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-fuchsia-400 via-violet-400 to-indigo-400 bg-clip-text text-transparent">
             Analytics
           </span>{" "}
 
@@ -255,9 +255,9 @@ function App() {
           transition={{
             delay: 0.3,
           }}
-          className={`text-center text-lg md:text-xl mt-6 max-w-3xl mx-auto ${darkMode
+          className={`text-center text-base md:text-lg mt-6 max-w-2xl mx-auto leading-8 ${darkMode
               ? "text-slate-400"
-              : "text-gray-500"
+              : "text-[#777386]"
             }`}
         >
           Analyze your Instagram followers,
@@ -289,15 +289,15 @@ function App() {
 
       {/* Upload Section */}
 
-      <section className="max-w-6xl mx-auto px-6 mt-14 pb-20">
-        <FileUpload onFiles={handleFiles} />
+      <section className="max-w-5xl mx-auto px-6 mt-14 pb-20">
+        <FileUpload onFiles={handleFiles} darkMode={darkMode} />
       </section>
 
       {/* Results */}
 
       {data && (
         <section className="max-w-6xl mx-auto px-6 pb-20">
-          <Results data={data} />
+          <Results data={data} darkMode={darkMode} />
         </section>
       )}
     </div>
