@@ -138,8 +138,8 @@ function Results({ data, darkMode }) {
               <div className="flex min-w-0 items-center gap-3">
                 <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full bg-gradient-to-br from-fuchsia-400 via-violet-500 to-indigo-400 p-[1.5px] shadow-lg shadow-violet-500/10">
                   <div className={`relative flex h-full w-full items-center justify-center overflow-hidden rounded-full ${darkMode ? "bg-[#171522]" : "bg-[#f4efff]"}`}>
-                    <span className="select-none text-sm font-bold tracking-wide text-violet-300">
-                      {user.replace(/^@/, "").slice(0, 2).toUpperCase()}
+                    <span className="select-none text-sm font-bold tracking-wide text-violet-200">
+                      {user.replace(/^@/, "").replace(/[^a-zA-Z0-9]/g, "").slice(0, 2).toUpperCase() || "?"}
                     </span>
                     <img
                       src={`https://unavatar.io/instagram/${encodeURIComponent(user.replace(/^@/, ""))}`}
