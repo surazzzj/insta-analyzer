@@ -9,7 +9,7 @@ import Results from "./components/Results";
 function App() {
   const [data, setData] = useState(() => {
     try {
-      const savedData = sessionStorage.getItem("instaInsightsData");
+      const savedData = localStorage.getItem("instaInsightsData");
       return savedData ? JSON.parse(savedData) : null;
     } catch (error) {
       console.error("Unable to restore saved analysis:", error);
@@ -28,17 +28,17 @@ function App() {
     );
   }, [darkMode]);
 
-  // Keep the current analysis available after a page refresh in this tab.
+  // Keep the current analysis available across page refreshes and browser restarts.
   useEffect(() => {
     try {
       if (data) {
-        sessionStorage.setItem("instaInsightsData", JSON.stringify(data));
+        localStorage.setItem("instaInsightsData", JSON.stringify(data));
       } else {
-        sessionStorage.removeItem("instaInsightsData");
+        localStorage.removeItem("instaInsightsData");
       }
     } catch (error) {
       console.error("Unable to save analysis for this session:", error);
-      toast.error("Could not save results in this browser session.");
+      toast.error("Could not save results in this browser.");
     }
   }, [data]);
 
