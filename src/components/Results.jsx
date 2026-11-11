@@ -9,411 +9,173 @@ import {
 } from "react-icons/fi";
 import Analytics from "./Analytics";
 
-function Results({ data }) {
+function Results({ data, darkMode }) {
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState("asc");
 
   const filteredUsers = data.notFollowingBack
     .filter((user) =>
-      user
-        .toLowerCase()
-        .includes(search.toLowerCase())
+      user.toLowerCase().includes(search.toLowerCase())
     )
     .sort((a, b) =>
-      sort === "asc"
-        ? a.localeCompare(b)
-        : b.localeCompare(a)
+      sort === "asc" ? a.localeCompare(b) : b.localeCompare(a)
     );
 
   const exportCSV = () => {
-    const csv =
-      "Username\n" +
-      data.notFollowingBack.join("\n");
-
-    const blob = new Blob([csv], {
-      type: "text/csv",
-    });
-
-    const url =
-      window.URL.createObjectURL(blob);
-
-    const link =
-      document.createElement("a");
-
+    const csv = "Username\n" + data.notFollowingBack.join("\n");
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement("a");
     link.href = url;
-    link.download =
-      "instagram-unfollowers.csv";
-
+    link.download = "instagram-unfollowers.csv";
     link.click();
-
-    toast.success(
-      "CSV exported successfully 🚀"
-    );
+    window.URL.revokeObjectURL(url);
+    toast.success("CSV exported successfully 🚀");
   };
 
   const copyUsername = (user) => {
     navigator.clipboard.writeText(user);
-
-    toast.success(
-      `Copied @${user}`
-    );
+    toast.success(`Copied @${user}`);
   };
 
+  const panel = darkMode
+    ? "border-white/[0.07] bg-[#11111c] text-slate-100"
+    : "border-black/[0.05] bg-white text-[#242033]";
+  const muted = darkMode ? "text-slate-400" : "text-[#858194]";
+  const input = darkMode
+    ? "border-white/10 bg-white/[0.04] text-white placeholder:text-slate-500 focus:border-violet-300/50"
+    : "border-black/[0.07] bg-white text-[#242033] placeholder:text-slate-400 focus:border-violet-300";
+
   const stats = [
-    {
-      title: "Not Following Back",
-      value: data.notFollowingBack.length,
-      desc: "People you follow",
-      emoji: "😢",
-      gradient:
-        "from-pink-500 to-rose-500",
-    },
-    {
-      title: "Fans",
-      value: data.fans.length,
-      desc: "Follow you only",
-      emoji: "❤️",
-      gradient:
-        "from-purple-500 to-indigo-500",
-    },
-    {
-      title: "Mutuals",
-      value: data.mutuals.length,
-      desc: "Follow each other",
-      emoji: "🤝",
-      gradient:
-        "from-cyan-500 to-blue-500",
-    },
-    {
-      title: "Connections",
-      value:
-        data.mutuals.length +
-        data.fans.length,
-      desc: "Total followers",
-      emoji: "📊",
-      gradient:
-        "from-orange-500 to-pink-500",
-    },
+    { title: "Not following back", value: data.notFollowingBack.length, desc: "People you follow", mark: "01", accent: "text-fuchsia-400" },
+    { title: "Fans", value: data.fans.length, desc: "Follow you only", mark: "02", accent: "text-violet-400" },
+    { title: "Mutuals", value: data.mutuals.length, desc: "Follow each other", mark: "03", accent: "text-sky-400" },
+    { title: "Connections", value: data.mutuals.length + data.fans.length, desc: "Your total followers", mark: "04", accent: "text-emerald-400" },
   ];
 
   return (
-    <div className="mt-14">
+    <div className="mt-8 md:mt-12">
+      <div className="mb-5 flex items-end justify-between gap-4">
+        <div>
+          <p className={`text-xs font-semibold uppercase tracking-[0.22em] ${darkMode ? "text-violet-300" : "text-violet-600"}`}>Your overview</p>
+          <h2 className={`mt-2 text-2xl font-semibold tracking-tight md:text-3xl ${darkMode ? "text-white" : "text-[#242033]"}`}>The connection report</h2>
+        </div>
+        <span className={`hidden rounded-full border px-3 py-1.5 text-xs sm:inline-flex ${darkMode ? "border-white/10 text-slate-400" : "border-black/[0.06] text-slate-500"}`}>Instagram insights</span>
+      </div>
 
-      {/* Stats Cards */}
-
-      <div className="grid md:grid-cols-4 gap-6">
-
+      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
         {stats.map((item, index) => (
           <motion.div
-            key={index}
-            initial={{
-              opacity: 0,
-              y: 30,
-            }}
-            animate={{
-              opacity: 1,
-              y: 0,
-            }}
-            transition={{
-              delay: index * 0.1,
-            }}
-            whileHover={{
-              y: -5,
-              scale: 1.03,
-            }}
-            className="
-              relative
-              overflow-hidden
-              rounded-3xl
-              bg-white
-              p-7
-              shadow-lg
-              border
-              border-gray-100
-            "
+            key={item.mark}
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.07 }}
+            whileHover={{ y: -3 }}
+            className={`relative overflow-hidden rounded-2xl border p-5 md:p-6 ${panel}`}
           >
-            <div
-              className={`absolute top-0 left-0 h-2 w-full bg-gradient-to-r ${item.gradient}`}
-            />
-
-            <div className="text-4xl">
-              {item.emoji}
+            <div className="flex items-center justify-between">
+              <span className={`text-[11px] font-semibold tracking-[0.18em] ${muted}`}>{item.mark} / 04</span>
+              <span className={`h-2 w-2 rounded-full ${item.accent.replace("text-", "bg-")}`} />
             </div>
-
-            <h3 className="font-bold text-lg mt-4">
-              {item.title}
-            </h3>
-
-            <p className="text-gray-500">
-              {item.desc}
-            </p>
-
-            <h2 className="text-5xl font-bold mt-5">
-              {item.value}
-            </h2>
+            <p className={`mt-5 text-sm font-medium ${muted}`}>{item.title}</p>
+            <h3 className="mt-1 text-4xl font-semibold tracking-tight tabular-nums">{item.value.toLocaleString()}</h3>
+            <p className={`mt-2 text-xs ${muted}`}>{item.desc}</p>
           </motion.div>
         ))}
       </div>
 
-      {/* Header */}
-
-      <div className="flex flex-col lg:flex-row justify-between items-center gap-5 mt-12">
-
+      <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h2 className="text-3xl font-bold">
-            People Not Following Back
-          </h2>
-
-          <p className="text-gray-500 mt-1">
-            Total Results:
-            {" "}
-            {filteredUsers.length}
-          </p>
+          <p className={`text-xs font-semibold uppercase tracking-[0.22em] ${darkMode ? "text-fuchsia-300" : "text-fuchsia-600"}`}>A closer look</p>
+          <h2 className={`mt-2 text-2xl font-semibold tracking-tight md:text-3xl ${darkMode ? "text-white" : "text-[#242033]"}`}>People not following back</h2>
+          <p className={`mt-1 text-sm ${muted}`}>{filteredUsers.length} {filteredUsers.length === 1 ? "account" : "accounts"} found</p>
         </div>
-
         <button
           onClick={exportCSV}
-          className="
-            flex
-            items-center
-            gap-2
-            px-6
-            py-3
-            rounded-xl
-            text-white
-            font-semibold
-            bg-gradient-to-r
-            from-pink-500
-            to-purple-500
-            shadow-lg
-            hover:scale-105
-            transition-all
-          "
+          className="inline-flex items-center justify-center gap-2 rounded-xl bg-violet-300 px-5 py-3 text-sm font-semibold text-[#201a30] shadow-lg shadow-violet-500/10 transition-all hover:-translate-y-0.5 hover:bg-violet-200"
         >
-          <FiDownload />
-          Export CSV
+          <FiDownload /> Export CSV
         </button>
-
       </div>
 
-      {/* Search + Sort */}
-
-      <div className="grid md:grid-cols-4 gap-4 mt-6">
-
-        <div className="md:col-span-3 relative">
-
-          <FiSearch
-            className="
-              absolute
-              left-4
-              top-1/2
-              -translate-y-1/2
-              text-gray-400
-            "
-          />
-
+      <div className="mt-5 grid gap-3 md:grid-cols-[1fr_180px]">
+        <div className="relative">
+          <FiSearch className={`absolute left-4 top-1/2 -translate-y-1/2 ${muted}`} />
           <input
             type="text"
-            placeholder="Search username..."
+            placeholder="Search by username..."
             value={search}
-            onChange={(e) =>
-              setSearch(e.target.value)
-            }
-            className="
-              w-full
-              pl-12
-              p-4
-              rounded-2xl
-              border
-              border-gray-200
-              focus:ring-2
-              focus:ring-purple-400
-              outline-none
-            "
+            onChange={(e) => setSearch(e.target.value)}
+            className={`w-full rounded-xl border py-3.5 pl-11 pr-4 text-sm outline-none transition-colors focus:ring-2 focus:ring-violet-400/20 ${input}`}
           />
-
         </div>
-
         <select
           value={sort}
-          onChange={(e) =>
-            setSort(e.target.value)
-          }
-          className="
-            p-4
-            rounded-2xl
-            border
-            border-gray-200
-            outline-none
-          "
+          onChange={(e) => setSort(e.target.value)}
+          className={`rounded-xl border px-4 py-3.5 text-sm outline-none transition-colors ${input}`}
         >
-          <option value="asc">
-            A → Z
-          </option>
-
-          <option value="desc">
-            Z → A
-          </option>
+          <option value="asc">Username: A – Z</option>
+          <option value="desc">Username: Z – A</option>
         </select>
-
       </div>
 
-      {/* Users List */}
-
-      <div className="mt-8 bg-white rounded-3xl shadow-lg p-8">
-
+      <div className={`mt-4 overflow-hidden rounded-2xl border p-3 md:p-4 ${panel}`}>
         {filteredUsers.length === 0 ? (
-          <div className="text-center py-20">
-
-            <div className="text-7xl">
-              🎉
-            </div>
-
-            <h3 className="text-3xl font-bold mt-4">
-              No Users Found
-            </h3>
-
-            <p className="text-gray-500 mt-2">
-              Try another search term.
-            </p>
-
+          <div className="py-16 text-center">
+            <div className="text-4xl">✳</div>
+            <h3 className="mt-4 text-lg font-semibold">{search ? "No matching accounts" : "All clear!"}</h3>
+            <p className={`mt-2 text-sm ${muted}`}>{search ? "Try a different username." : "There are no accounts in this list."}</p>
           </div>
         ) : (
-          filteredUsers.map(
-            (user, index) => (
-              <motion.div
-                key={user}
-                initial={{
-                  opacity: 0,
-                  x: -30,
-                }}
-                animate={{
-                  opacity: 1,
-                  x: 0,
-                }}
-                transition={{
-                  delay:
-                    index * 0.03,
-                }}
-                whileHover={{
-                  scale: 1.01,
-                }}
-                className="
-                  flex
-                  flex-col
-                  md:flex-row
-                  md:items-center
-                  md:justify-between
-                  gap-4
-                  bg-gray-50
-                  rounded-2xl
-                  p-5
-                  mb-4
-                  border
-                  border-gray-100
-                  hover:shadow-lg
-                  transition-all
-                "
-              >
-                <div className="flex items-center gap-4">
-
-                  <div
-                    className="
-                      relative
-                      w-14
-                      h-14
-                      shrink-0
-                      overflow-hidden
-                      rounded-full
-                      bg-gradient-to-r
-                      from-pink-500
-                      via-purple-500
-                      to-indigo-500
-                    "
-                  >
+          filteredUsers.map((user, index) => (
+            <motion.div
+              key={user}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: Math.min(index * 0.02, 0.2) }}
+              className={`mb-2 flex flex-col gap-4 rounded-xl border p-4 transition-colors last:mb-0 sm:flex-row sm:items-center sm:justify-between ${darkMode ? "border-white/[0.05] bg-white/[0.025] hover:bg-white/[0.05]" : "border-black/[0.04] bg-[#faf9fc] hover:bg-violet-50/60"}`}
+            >
+              <div className="flex min-w-0 items-center gap-3">
+                <div className="h-12 w-12 shrink-0 overflow-hidden rounded-full bg-gradient-to-br from-fuchsia-400 via-violet-500 to-indigo-500 p-[2px]">
+                  <div className={`h-full w-full overflow-hidden rounded-full ${darkMode ? "bg-[#171522]" : "bg-white"}`}>
                     <img
                       src={`https://unavatar.io/instagram/${encodeURIComponent(user)}`}
                       alt={`@${user} profile picture`}
                       loading="lazy"
                       decoding="async"
-                      className="w-full h-full object-cover"
-                      onError={(event) => {
-                        event.currentTarget.style.display = "none";
-                      }}
+                      className="h-full w-full object-cover"
+                      onError={(event) => { event.currentTarget.style.display = "none"; }}
                     />
                   </div>
-
-                  <div>
-
-                    <h3 className="font-semibold text-lg">
-                      @{user}
-                    </h3>
-
-                    <p className="text-gray-500 text-sm">
-                      Instagram User
-                    </p>
-
-                  </div>
-
                 </div>
-
-                <div className="flex gap-3">
-
-                  <button
-                    onClick={() =>
-                      copyUsername(user)
-                    }
-                    className="
-                      flex
-                      items-center
-                      gap-2
-                      px-4
-                      py-2
-                      rounded-xl
-                      border
-                      hover:bg-gray-100
-                      transition-all
-                    "
-                  >
-                    <FiCopy />
-                    Copy
-                  </button>
-
-                  <a
-                    href={`https://instagram.com/${user}`}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="
-                      flex
-                      items-center
-                      gap-2
-                      px-4
-                      py-2
-                      rounded-xl
-                      text-white
-                      bg-gradient-to-r
-                      from-pink-500
-                      to-purple-500
-                      hover:scale-105
-                      transition-all
-                    "
-                  >
-                    <FiExternalLink />
-                    View Profile
-                  </a>
-
+                <div className="min-w-0">
+                  <h3 className="truncate text-sm font-semibold">@{user}</h3>
+                  <p className={`mt-1 text-xs ${muted}`}>Instagram account</p>
                 </div>
-              </motion.div>
-            )
-          )
+              </div>
+
+              <div className="flex shrink-0 gap-2">
+                <button
+                  onClick={() => copyUsername(user)}
+                  className={`inline-flex items-center gap-2 rounded-lg border px-3 py-2 text-xs font-medium transition-colors ${darkMode ? "border-white/10 text-slate-300 hover:bg-white/10" : "border-black/[0.07] text-slate-600 hover:bg-white"}`}
+                >
+                  <FiCopy /> Copy
+                </button>
+                <a
+                  href={`https://instagram.com/${user}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 rounded-lg bg-[#29213f] px-3 py-2 text-xs font-semibold text-white transition-colors hover:bg-violet-800"
+                >
+                  <FiExternalLink /> View profile
+                </a>
+              </div>
+            </motion.div>
+          ))
         )}
-
       </div>
 
-      {/* Analytics Section */}
-
-      <Analytics data={data} />
-
+      <Analytics data={data} darkMode={darkMode} />
     </div>
   );
 }
