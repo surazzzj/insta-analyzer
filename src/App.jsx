@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { FaInstagram, FaMoon, FaSun } from "react-icons/fa";
+import { FaMoon, FaSun } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { Toaster, toast } from "react-hot-toast";
 
@@ -177,10 +177,29 @@ function App() {
 
           <div className="flex items-center gap-3">
 
-            <FaInstagram
-              size={34}
-              className="text-fuchsia-500"
-            />
+            <div className="relative flex h-11 w-11 shrink-0 items-center justify-center">
+              <div className="absolute inset-0 rounded-[15px] bg-gradient-to-br from-fuchsia-500 via-violet-500 to-indigo-500 opacity-25 blur-md" />
+              <svg
+                viewBox="0 0 48 48"
+                role="img"
+                aria-label="InstaInsights logo"
+                className="relative h-11 w-11 drop-shadow-lg"
+                fill="none"
+              >
+                <defs>
+                  <linearGradient id="insightLogoGradient" x1="5" y1="4" x2="43" y2="44" gradientUnits="userSpaceOnUse">
+                    <stop stopColor="#F0ABFC" />
+                    <stop offset=".52" stopColor="#A78BFA" />
+                    <stop offset="1" stopColor="#818CF8" />
+                  </linearGradient>
+                </defs>
+                <rect x="3" y="3" width="42" height="42" rx="14" fill="#171322" stroke="url(#insightLogoGradient)" strokeWidth="1.8" />
+                <path d="M17 13.5h14A4.5 4.5 0 0 1 35.5 18v12a4.5 4.5 0 0 1-4.5 4.5H17a4.5 4.5 0 0 1-4.5-4.5V18a4.5 4.5 0 0 1 4.5-4.5Z" stroke="url(#insightLogoGradient)" strokeWidth="2.4" />
+                <circle cx="24" cy="24" r="6.2" stroke="url(#insightLogoGradient)" strokeWidth="2.4" />
+                <circle cx="33" cy="16.5" r="1.7" fill="#F0ABFC" />
+                <path d="m37.5 7 .9 2.6L41 10.5l-2.6.9-.9 2.6-.9-2.6-2.6-.9 2.6-.9.9-2.6Z" fill="#F5D0FE" />
+              </svg>
+            </div>
 
             <h1
               className={`text-2xl font-bold tracking-tight ${darkMode
