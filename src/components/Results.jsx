@@ -182,6 +182,18 @@ function Results({ data, darkMode }) {
       </div>
 
       <Analytics data={data} darkMode={darkMode} />
+
+      <p className={`mt-4 text-center text-[11px] ${darkMode ? "text-slate-500" : "text-slate-400"}`}>
+        Profile image lookup by{" "}
+        <a
+          href="https://unavatar.io"
+          target="_blank"
+          rel="noreferrer"
+          className="underline underline-offset-2 transition-colors hover:text-violet-400"
+        >
+          Unavatar
+        </a>
+      </p>
     </div>
   );
 }
