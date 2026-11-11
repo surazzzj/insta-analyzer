@@ -168,9 +168,9 @@ function Results({ data, darkMode }) {
                   <FiCopy /> Copy
                 </button>
                 <a
-                  href={`https://instagram.com/${user}`}
+                  href={`https://www.instagram.com/${encodeURIComponent(user.replace(/^@/, ""))}/`}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 rounded-lg bg-[#29213f] px-3 py-2 text-xs font-semibold text-white transition-colors hover:bg-violet-800"
                 >
                   <FiExternalLink /> View profile
