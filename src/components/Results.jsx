@@ -136,15 +136,21 @@ function Results({ data, darkMode }) {
               className={`mb-2 flex flex-col gap-4 rounded-xl border p-4 transition-colors last:mb-0 sm:flex-row sm:items-center sm:justify-between ${darkMode ? "border-white/[0.05] bg-white/[0.025] hover:bg-white/[0.05]" : "border-black/[0.04] bg-[#faf9fc] hover:bg-violet-50/60"}`}
             >
               <div className="flex min-w-0 items-center gap-3">
-                <div className="h-12 w-12 shrink-0 overflow-hidden rounded-full bg-gradient-to-br from-fuchsia-400 via-violet-500 to-indigo-500 p-[2px]">
-                  <div className={`h-full w-full overflow-hidden rounded-full ${darkMode ? "bg-[#171522]" : "bg-white"}`}>
+                <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full bg-gradient-to-br from-fuchsia-400 via-violet-500 to-indigo-400 p-[1.5px] shadow-lg shadow-violet-500/10">
+                  <div className={`relative flex h-full w-full items-center justify-center overflow-hidden rounded-full ${darkMode ? "bg-[#171522]" : "bg-[#f4efff]"}`}>
+                    <span className="select-none text-sm font-bold tracking-wide text-violet-300">
+                      {user.replace(/^@/, "").slice(0, 2).toUpperCase()}
+                    </span>
                     <img
-                      src={`https://unavatar.io/instagram/${encodeURIComponent(user)}`}
+                      src={`https://unavatar.io/instagram/${encodeURIComponent(user.replace(/^@/, ""))}`}
                       alt={`@${user} profile picture`}
                       loading="lazy"
                       decoding="async"
-                      className="h-full w-full object-cover"
-                      onError={(event) => { event.currentTarget.style.display = "none"; }}
+                      referrerPolicy="no-referrer"
+                      className="absolute inset-0 h-full w-full rounded-full bg-transparent object-cover"
+                      onError={(event) => {
+                        event.currentTarget.remove();
+                      }}
                     />
                   </div>
                 </div>
