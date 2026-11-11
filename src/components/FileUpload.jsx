@@ -1,8 +1,8 @@
 import { useDropzone } from "react-dropzone";
-import { FiUploadCloud } from "react-icons/fi";
+import { FiUploadCloud, FiShield, FiZap, FiFileText } from "react-icons/fi";
 import { motion } from "framer-motion";
 
-function FileUpload({ onFiles }) {
+function FileUpload({ onFiles, darkMode }) {
   const {
     getRootProps,
     getInputProps,
@@ -16,287 +16,87 @@ function FileUpload({ onFiles }) {
 
   return (
     <motion.div
-      initial={{
-        opacity: 0,
-        y: 30,
-      }}
-      animate={{
-        opacity: 1,
-        y: 0,
-      }}
-      transition={{
-        duration: 0.6,
-      }}
-      className="
-        relative
-        overflow-hidden
-        rounded-[36px]
-        bg-white/90
-        backdrop-blur-xl
-        shadow-2xl
-        border
-        border-white/50
-        p-8
-        md:p-10
-      "
+      initial={{ opacity: 0, y: 24 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+      className={`relative overflow-hidden rounded-[28px] border p-5 md:p-9 backdrop-blur-xl transition-colors duration-300 ${
+        darkMode
+          ? "bg-[#11111c]/90 border-white/[0.08] shadow-[0_24px_80px_rgba(0,0,0,0.28)]"
+          : "bg-white/90 border-white shadow-[0_24px_80px_rgba(40,30,80,0.08)]"
+      }`}
     >
-      {/* Glow Effects */}
-
-      <div
-        className="
-          absolute
-          -top-24
-          -right-24
-          w-80
-          h-80
-          rounded-full
-          bg-pink-500/20
-          blur-3xl
-        "
-      />
-
-      <div
-        className="
-          absolute
-          -bottom-24
-          -left-24
-          w-80
-          h-80
-          rounded-full
-          bg-purple-500/20
-          blur-3xl
-        "
-      />
-
-      {/* Upload Area */}
+      <div className={`pointer-events-none absolute -right-24 -top-28 h-72 w-72 rounded-full blur-3xl ${darkMode ? "bg-violet-500/10" : "bg-violet-300/25"}`} />
+      <div className={`pointer-events-none absolute -bottom-28 -left-24 h-72 w-72 rounded-full blur-3xl ${darkMode ? "bg-fuchsia-500/10" : "bg-fuchsia-300/20"}`} />
 
       <div
         {...getRootProps()}
-        className={`
-          relative
-          rounded-3xl
-          border-2
-          border-dashed
-          p-12
-          md:p-20
-          text-center
-          cursor-pointer
-          transition-all
-          duration-300
-
-          ${
-            isDragActive
-              ? `
-                border-pink-500
-                bg-gradient-to-r
-                from-pink-50
-                to-purple-50
-                scale-[1.02]
-              `
-              : `
-                border-purple-300
-                hover:border-pink-500
-                hover:bg-purple-50/50
-              `
-          }
-        `}
+        className={`relative cursor-pointer rounded-[22px] border border-dashed px-5 py-12 md:py-16 text-center transition-all duration-300 ${
+          isDragActive
+            ? darkMode
+              ? "border-violet-300 bg-violet-400/10"
+              : "border-violet-500 bg-violet-50"
+            : darkMode
+              ? "border-white/15 bg-white/[0.025] hover:border-violet-300/60 hover:bg-white/[0.045]"
+              : "border-violet-200 bg-[#faf9ff] hover:border-violet-400 hover:bg-violet-50/70"
+        }`}
       >
         <input {...getInputProps()} />
 
-        {/* Floating Icon */}
-
         <motion.div
-          animate={{
-            y: [0, -12, 0],
-          }}
-          transition={{
-            duration: 2,
-            repeat: Infinity,
-          }}
+          animate={{ y: [0, -6, 0] }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+          className={`mx-auto flex h-16 w-16 items-center justify-center rounded-2xl border ${darkMode ? "border-violet-300/15 bg-violet-400/10 text-violet-200" : "border-violet-100 bg-violet-100/70 text-violet-600"}`}
         >
-          <FiUploadCloud
-            size={95}
-            className="
-              mx-auto
-              text-purple-500
-            "
-          />
+          <FiUploadCloud size={32} />
         </motion.div>
 
-        {/* Heading */}
-
-        <h2
-          className="
-            text-3xl
-            md:text-5xl
-            font-bold
-            mt-8
-            text-slate-900
-          "
-        >
-          Upload Instagram Data
-        </h2>
-
-        <p
-          className="
-            mt-5
-            text-lg
-            text-gray-500
-            max-w-2xl
-            mx-auto
-          "
-        >
-          Upload your Instagram export files and
-          instantly discover unfollowers, mutual
-          followers, and hidden fans.
+        <p className={`mt-7 text-xs font-semibold uppercase tracking-[0.24em] ${darkMode ? "text-violet-300" : "text-violet-600"}`}>
+          Your audience, in focus
         </p>
 
-        {/* File Names */}
+        <h2 className={`mt-3 text-2xl font-semibold tracking-tight md:text-4xl ${darkMode ? "text-white" : "text-[#242033]"}`}>
+          Upload your Instagram data
+        </h2>
 
-        <div
-          className="
-            flex
-            flex-wrap
-            justify-center
-            gap-3
-            mt-6
-          "
-        >
-          <span
-            className="
-              px-4
-              py-2
-              rounded-full
-              bg-pink-100
-              text-pink-700
-              text-sm
-              font-semibold
-            "
-          >
-            followers.json
+        <p className={`mx-auto mt-4 max-w-xl text-sm leading-7 md:text-base ${darkMode ? "text-slate-400" : "text-[#777386]"}`}>
+          Drop your Instagram export files here and uncover your connections in a few seconds.
+        </p>
+
+        <div className="mt-6 flex flex-wrap justify-center gap-2">
+          <span className={`rounded-full border px-4 py-2 text-xs font-medium ${darkMode ? "border-white/10 bg-white/[0.04] text-slate-300" : "border-violet-100 bg-white text-slate-600"}`}>
+            followers_1.json
           </span>
-
-          <span
-            className="
-              px-4
-              py-2
-              rounded-full
-              bg-purple-100
-              text-purple-700
-              text-sm
-              font-semibold
-            "
-          >
+          <span className={`rounded-full border px-4 py-2 text-xs font-medium ${darkMode ? "border-white/10 bg-white/[0.04] text-slate-300" : "border-violet-100 bg-white text-slate-600"}`}>
             following.json
           </span>
         </div>
 
-        {/* CTA */}
-
-        <button
-          type="button"
-          className="
-            mt-8
-            px-8
-            py-4
-            rounded-2xl
-            text-white
-            font-semibold
-            text-lg
-            bg-gradient-to-r
-            from-pink-500
-            via-purple-500
-            to-indigo-500
-            shadow-lg
-            hover:scale-105
-            transition-all
-          "
-        >
-          Choose Files
-        </button>
-
-        {/* Drag State */}
+        <div className={`mx-auto mt-8 inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold shadow-lg shadow-violet-500/15 transition-transform hover:-translate-y-0.5 ${darkMode ? "bg-violet-300 text-[#171322]" : "bg-[#29213f] text-white"}`}>
+          <FiFileText />
+          Choose files
+        </div>
 
         {isDragActive && (
           <motion.p
-            initial={{
-              opacity: 0,
-            }}
-            animate={{
-              opacity: 1,
-            }}
-            className="
-              mt-6
-              text-pink-600
-              font-semibold
-              text-lg
-            "
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className={`mt-5 text-sm font-semibold ${darkMode ? "text-violet-200" : "text-violet-700"}`}
           >
-            🚀 Drop your files here
+            Drop your files to begin
           </motion.p>
         )}
       </div>
 
-      {/* Bottom Features */}
-
-      <div
-        className="
-          flex
-          flex-wrap
-          justify-center
-          gap-3
-          mt-8
-        "
-      >
-        <span
-          className="
-            px-4
-            py-2
-            rounded-full
-            bg-green-100
-            text-green-700
-            text-sm
-            font-medium
-          "
-        >
-          🔒 100% Private
+      <div className="relative mt-6 flex flex-wrap items-center justify-center gap-x-7 gap-y-3">
+        <span className={`inline-flex items-center gap-2 text-xs font-medium ${darkMode ? "text-slate-400" : "text-slate-500"}`}>
+          <FiShield className={darkMode ? "text-emerald-300" : "text-emerald-600"} />
+          Files stay on your device
         </span>
-
-        <span
-          className="
-            px-4
-            py-2
-            rounded-full
-            bg-blue-100
-            text-blue-700
-            text-sm
-            font-medium
-          "
-        >
-          ⚡ Instant Analysis
-        </span>
-
-        <span
-          className="
-            px-4
-            py-2
-            rounded-full
-            bg-orange-100
-            text-orange-700
-            text-sm
-            font-medium
-          "
-        >
-          📥 CSV Export
+        <span className={`inline-flex items-center gap-2 text-xs font-medium ${darkMode ? "text-slate-400" : "text-slate-500"}`}>
+          <FiZap className={darkMode ? "text-amber-300" : "text-amber-600"} />
+          Instant analysis
         </span>
       </div>
-
-      {/* Footer */}
-
-      <p className="text-center text-gray-400 mt-6">
-        Everything is processed locally in your
-        browser. No data is uploaded anywhere.
-      </p>
     </motion.div>
   );
 }
