@@ -7,7 +7,15 @@ import FileUpload from "./components/FileUpload";
 import Results from "./components/Results";
 
 function App() {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState(() => {
+    try {
+      const savedData = sessionStorage.getItem("instaInsightsData");
+      return savedData ? JSON.parse(savedData) : null;
+    } catch (error) {
+      console.error("Unable to restore saved analysis:", error);
+      return null;
+    }
+  });
 
   const [darkMode, setDarkMode] = useState(
     () => localStorage.getItem("theme") !== "light"
@@ -19,6 +27,20 @@ function App() {
       darkMode ? "dark" : "light"
     );
   }, [darkMode]);
+
+  // Keep the current analysis available after a page refresh in this tab.
+  useEffect(() => {
+    try {
+      if (data) {
+        sessionStorage.setItem("instaInsightsData", JSON.stringify(data));
+      } else {
+        sessionStorage.removeItem("instaInsightsData");
+      }
+    } catch (error) {
+      console.error("Unable to save analysis for this session:", error);
+      toast.error("Could not save results in this browser session.");
+    }
+  }, [data]);
 
   const readJSON = (file) => {
     return new Promise((resolve) => {
